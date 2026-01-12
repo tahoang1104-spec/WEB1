@@ -31,7 +31,8 @@ st.markdown("""
     .stApp {{
         background:
             linear-gradient(rgba(0,0,0,0.4), rgba(0,0,0,0.4)),
-            url("data:image/jpeg;base64,{bg_base64}") no-repeat center/cover;
+            url("data:image/jpeg;base64,{bg_base64}")
+            no-repeat center / cover;
         background-attachment: fixed;
     }}
     </style>
@@ -164,4 +165,5 @@ if uploaded_file:
     </div>
 
     """, unsafe_allow_html=True)
+
 
