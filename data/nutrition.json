@@ -1,0 +1,546 @@
+{
+  "banh_canh": {
+    "display_name": "Bánh canh",
+    "calories": 200,
+    "fat": 7,
+    "sugar": 2,
+    "salt": 0.7,
+    "description": "Vietnamese thick noodle soup"
+  },
+  "banh_chung": {
+    "display_name": "Bánh chưng",
+    "calories": 600,
+    "fat": 10,
+    "sugar": 1,
+    "salt": 1.2,
+    "description": "Square sticky rice cake"
+  },
+  "banh_cuon": {
+    "display_name": "Bánh cuốn",
+    "calories": 300,
+    "fat": 8,
+    "sugar": 2,
+    "salt": 0.8,
+    "description": "Rolled rice pancake"
+  },
+  "banh_khot": {
+    "display_name": "Bánh khọt",
+    "calories": 400,
+    "fat": 15,
+    "sugar": 3,
+    "salt": 1,
+    "description": "Mini savory pancakes"
+  },
+  "banh_mi": {
+    "display_name": "Bánh mì",
+    "calories": 350,
+    "fat": 12,
+    "sugar": 4,
+    "salt": 1.5,
+    "description": "Vietnamese baguette sandwich"
+  },
+  "banh_trang": {
+    "display_name": "Bánh tráng",
+    "calories": 300,
+    "fat": 0.5,
+    "sugar": 0,
+    "salt": 0.2,
+    "description": "Rice paper"
+  },
+  "banh_trang_tron": {
+    "display_name": "Bánh tráng trộn",
+    "calories": 250,
+    "fat": 10,
+    "sugar": 3,
+    "salt": 1,
+    "description": "Rice paper salad"
+  },
+  "banh_xeo": {
+    "display_name": "Bánh xèo",
+    "calories": 400,
+    "fat": 16,
+    "sugar": 3,
+    "salt": 1.5,
+    "description": "Vietnamese sizzling pancake"
+  },
+  "bo_kho": {
+    "display_name": "Bò kho",
+    "calories": 450,
+    "fat": 20,
+    "sugar": 5,
+    "salt": 2,
+    "description": "Beef stew"
+  },
+  "bo_la_lot": {
+    "display_name": "Bò lá lốt",
+    "calories": 300,
+    "fat": 12,
+    "sugar": 2,
+    "salt": 1,
+    "description": "Grilled beef wrapped in betel leaves"
+  },
+  "bong_cai": {
+    "display_name": "Bông cải",
+    "calories": 25,
+    "fat": 0.1,
+    "sugar": 2,
+    "salt": 0,
+    "description": "Cauliflower"
+  },
+  "bun": {
+    "display_name": "Bún",
+    "calories": 110,
+    "fat": 0.5,
+    "sugar": 0.5,
+    "salt": 0.1,
+    "description": "Rice vermicelli"
+  },
+  "bun_bo_hue": {
+    "display_name": "Bún bò Huế",
+    "calories": 500,
+    "fat": 15,
+    "sugar": 4,
+    "salt": 2.5,
+    "description": "Hue beef noodle soup"
+  },
+  "bun_cha": {
+    "display_name": "Bún chả",
+    "calories": 550,
+    "fat": 25,
+    "sugar": 6,
+    "salt": 2.5,
+    "description": "Grilled pork with vermicelli"
+  },
+  "bun_dau": {
+    "display_name": "Bún đậu",
+    "calories": 400,
+    "fat": 20,
+    "sugar": 4,
+    "salt": 1.8,
+    "description": "Vermicelli with tofu"
+  },
+  "bun_mam": {
+    "display_name": "Bún mắm",
+    "calories": 600,
+    "fat": 20,
+    "sugar": 6,
+    "salt": 2.5,
+    "description": "Fermented fish noodle soup"
+  },
+  "bun_rieu": {
+    "display_name": "Bún riêu",
+    "calories": 500,
+    "fat": 18,
+    "sugar": 4,
+    "salt": 2.2,
+    "description": "Crab noodle soup"
+  },
+  "ca": {
+    "display_name": "Cá",
+    "calories": 150,
+    "fat": 4,
+    "sugar": 0,
+    "salt": 0.5,
+    "description": "Fish"
+  },
+  "ca_chua": {
+    "display_name": "Cà chua",
+    "calories": 18,
+    "fat": 0.2,
+    "sugar": 2.6,
+    "salt": 0,
+    "description": "Tomato"
+  },
+  "ca_phao": {
+    "display_name": "Cà pháo",
+    "calories": 30,
+    "fat": 0.2,
+    "sugar": 2,
+    "salt": 0.6,
+    "description": "Pickled eggplant"
+  },
+  "ca_rot": {
+    "display_name": "Cà rốt",
+    "calories": 41,
+    "fat": 0.2,
+    "sugar": 4.7,
+    "salt": 0,
+    "description": "Carrot"
+  },
+  "canh": {
+    "display_name": "Canh",
+    "calories": 100,
+    "fat": 3,
+    "sugar": 2,
+    "salt": 0.8,
+    "description": "Soup"
+  },
+  "cha": {
+    "display_name": "Chả",
+    "calories": 250,
+    "fat": 20,
+    "sugar": 1,
+    "salt": 1.2,
+    "description": "Vietnamese pork roll"
+  },
+  "cha_gio": {
+    "display_name": "Chả giò",
+    "calories": 150,
+    "fat": 8,
+    "sugar": 1,
+    "salt": 0.5,
+    "description": "Spring rolls"
+  },
+  "chanh": {
+    "display_name": "Chanh",
+    "calories": 30,
+    "fat": 0.2,
+    "sugar": 1.7,
+    "salt": 0.03,
+    "description": "Lime"
+  },
+  "com": {
+    "display_name": "Cơm",
+    "calories": 130,
+    "fat": 0.3,
+    "sugar": 0,
+    "salt": 0,
+    "description": "Rice"
+  },
+  "com_tam": {
+    "display_name": "Cơm tấm",
+    "calories": 150,
+    "fat": 0.5,
+    "sugar": 0,
+    "salt": 0.02,
+    "description": "Broken rice"
+  },
+  "con_nguoi": {
+    "display_name": "Con người",
+    "calories": 0,
+    "fat": 0,
+    "sugar": 0,
+    "salt": 0,
+    "description": "Human (Safety Label)"
+  },
+  "cu_kieu": {
+    "display_name": "Củ kiệu",
+    "calories": 20,
+    "fat": 0.1,
+    "sugar": 1,
+    "salt": 1,
+    "description": "Pickled scallion head"
+  },
+  "cua": {
+    "display_name": "Cua",
+    "calories": 97,
+    "fat": 1.5,
+    "sugar": 0,
+    "salt": 0.4,
+    "description": "Crab"
+  },
+  "dau_hu": {
+    "display_name": "Đậu hũ",
+    "calories": 76,
+    "fat": 4.8,
+    "sugar": 0.3,
+    "salt": 0.01,
+    "description": "Tofu"
+  },
+  "dua_chua": {
+    "display_name": "Dưa chua",
+    "calories": 25,
+    "fat": 0.1,
+    "sugar": 2,
+    "salt": 1.5,
+    "description": "Pickled vegetables"
+  },
+  "dua_leo": {
+    "display_name": "Dưa leo",
+    "calories": 16,
+    "fat": 0.1,
+    "sugar": 1.7,
+    "salt": 0,
+    "description": "Cucumber"
+  },
+  "goi_cuon": {
+    "display_name": "Gỏi cuốn",
+    "calories": 100,
+    "fat": 2,
+    "sugar": 1,
+    "salt": 0.5,
+    "description": "Fresh spring rolls"
+  },
+  "hamburger": {
+    "display_name": "Hamburger",
+    "calories": 350,
+    "fat": 20,
+    "sugar": 5,
+    "salt": 1.8,
+    "description": "Western-style burger"
+  },
+  "heo_quay": {
+    "display_name": "Heo quay",
+    "calories": 330,
+    "fat": 28,
+    "sugar": 0,
+    "salt": 1.1,
+    "description": "Roast pork"
+  },
+  "hu_tieu": {
+    "display_name": "Hủ tiếu",
+    "calories": 400,
+    "fat": 10,
+    "sugar": 3,
+    "salt": 2,
+    "description": "Clear rice noodle soup"
+  },
+  "kho_qua_thit": {
+    "display_name": "Khổ qua thịt",
+    "calories": 250,
+    "fat": 7,
+    "sugar": 2,
+    "salt": 1.3,
+    "description": "Stuffed bitter melon soup"
+  },
+  "khoai_tay_chien": {
+    "display_name": "Khoai tây chiên",
+    "calories": 312,
+    "fat": 15,
+    "sugar": 0.4,
+    "salt": 0.5,
+    "description": "French fries"
+  },
+  "lau": {
+    "display_name": "Lẩu",
+    "calories": 600,
+    "fat": 20,
+    "sugar": 4,
+    "salt": 3,
+    "description": "Hotpot"
+  },
+  "long_heo": {
+    "display_name": "Lòng heo",
+    "calories": 250,
+    "fat": 20,
+    "sugar": 0,
+    "salt": 0.9,
+    "description": "Pork offal"
+  },
+  "mi": {
+    "display_name": "Mì",
+    "calories": 138,
+    "fat": 2,
+    "sugar": 0.2,
+    "salt": 0.6,
+    "description": "Egg noodles"
+  },
+  "muc": {
+    "display_name": "Mực",
+    "calories": 92,
+    "fat": 1.4,
+    "sugar": 0,
+    "salt": 0.3,
+    "description": "Squid"
+  },
+  "nam": {
+    "display_name": "Nấm",
+    "calories": 22,
+    "fat": 0.1,
+    "sugar": 1.8,
+    "salt": 0.01,
+    "description": "Mushroom"
+  },
+  "oc": {
+    "display_name": "Ốc",
+    "calories": 79,
+    "fat": 1.4,
+    "sugar": 0,
+    "salt": 0.4,
+    "description": "Snails"
+  },
+  "ot_chuong": {
+    "display_name": "Ớt chuông",
+    "calories": 20,
+    "fat": 0.2,
+    "sugar": 4.2,
+    "salt": 0.02,
+    "description": "Bell pepper"
+  },
+  "pho": {
+    "display_name": "Phở",
+    "calories": 450,
+    "fat": 15,
+    "sugar": 3,
+    "salt": 1.8,
+    "description": "Vietnamese noodle soup"
+  },
+  "pho_mai": {
+    "display_name": "Phô mai",
+    "calories": 400,
+    "fat": 33,
+    "sugar": 1.5,
+    "salt": 1.8,
+    "description": "Cheese"
+  },
+  "rau": {
+    "display_name": "Rau",
+    "calories": 25,
+    "fat": 0.2,
+    "sugar": 2,
+    "salt": 0.02,
+    "description": "Vegetables"
+  },
+  "salad": {
+    "display_name": "Salad",
+    "calories": 150,
+    "fat": 10,
+    "sugar": 2,
+    "salt": 0.6,
+    "description": "Salad"
+  },
+  "thit_bo": {
+    "display_name": "Thịt bò",
+    "calories": 250,
+    "fat": 15,
+    "sugar": 0,
+    "salt": 0.5,
+    "description": "Beef"
+  },
+  "thit_ga": {
+    "display_name": "Thịt gà",
+    "calories": 239,
+    "fat": 13.6,
+    "sugar": 0,
+    "salt": 0.7,
+    "description": "Chicken"
+  },
+  "thit_heo": {
+    "display_name": "Thịt heo",
+    "calories": 242,
+    "fat": 14,
+    "sugar": 0,
+    "salt": 0.6,
+    "description": "Pork"
+  },
+  "thit_kho": {
+    "display_name": "Thịt kho",
+    "calories": 500,
+    "fat": 30,
+    "sugar": 5,
+    "salt": 2,
+    "description": "Braised pork"
+  },
+  "thit_nuong": {
+    "display_name": "Thịt nướng",
+    "calories": 400,
+    "fat": 20,
+    "sugar": 3,
+    "salt": 1.5,
+    "description": "Grilled meat"
+  },
+  "tom": {
+    "display_name": "Tôm",
+    "calories": 99,
+    "fat": 1,
+    "sugar": 0,
+    "salt": 0.4,
+    "description": "Shrimp"
+  },
+  "trung": {
+    "display_name": "Trứng",
+    "calories": 155,
+    "fat": 11,
+    "sugar": 1.1,
+    "salt": 0.12,
+    "description": "Egg"
+  },
+  "xoi": {
+    "display_name": "Xôi",
+    "calories": 180,
+    "fat": 0.3,
+    "sugar": 0.1,
+    "salt": 0.04,
+    "description": "Sticky rice"
+  },
+  "banh_beo": {
+    "display_name": "Bánh bèo",
+    "calories": 120,
+    "fat": 4,
+    "sugar": 1.5,
+    "salt": 0.3,
+    "description": "Vietnamese savory steamed rice cake"
+  },
+  "cao_lau": {
+    "display_name": "Cao lầu",
+    "calories": 350,
+    "fat": 10,
+    "sugar": 2,
+    "salt": 1.4,
+    "description": "Cao lau noodles"
+  },
+  "mi_quang": {
+    "display_name": "Mì Quảng",
+    "calories": 400,
+    "fat": 12,
+    "sugar": 3,
+    "salt": 1.8,
+    "description": "Quang-style noodles"
+  },
+  "com_chien_duong_chau": {
+    "display_name": "Cơm chiên dương châu",
+    "calories": 600,
+    "fat": 20,
+    "sugar": 4,
+    "salt": 2.2,
+    "description": "Yangzhou fried rice"
+  },
+  "bun_cha_ca": {
+    "display_name": "Bún chả cá",
+    "calories": 500,
+    "fat": 15,
+    "sugar": 3,
+    "salt": 1.9,
+    "description": "Fish cake noodle soup"
+  },
+  "com_chien_ga": {
+    "display_name": "Cơm chiên gà",
+    "calories": 700,
+    "fat": 25,
+    "sugar": 4,
+    "salt": 2.5,
+    "description": "Fried rice with chicken"
+  },
+  "chao_long": {
+    "display_name": "Cháo lòng",
+    "calories": 400,
+    "fat": 10,
+    "sugar": 1.5,
+    "salt": 1.2,
+    "description": "Pork organ congee"
+  },
+  "nom_hoa_chuoi": {
+    "display_name": "Nộm hoa chuối",
+    "calories": 150,
+    "fat": 7,
+    "sugar": 2,
+    "salt": 1,
+    "description": "Banana blossom salad"
+  },
+  "nui_xao_bo": {
+    "display_name": "Nui xào bò",
+    "calories": 550,
+    "fat": 18,
+    "sugar": 3,
+    "salt": 2.1,
+    "description": "Stir-fried macaroni with beef"
+  },
+  "sup_cua": {
+    "display_name": "Súp cua",
+    "calories": 200,
+    "fat": 5,
+    "sugar": 1.5,
+    "salt": 0.9,
+    "description": "Crab soup"
+  }
+}
