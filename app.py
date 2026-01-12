@@ -20,9 +20,8 @@ st.markdown("""
     
     /* Ảnh nền Hero (Full màn hình) */
     .stApp {
-        background: linear-gradient(rgba(0,0,0,0.4), rgba(0,0,0,0.4)), 
-                    url('https://images.unsplash.com/photo-1504674900247-0877df9cc836?auto=format&fit=crop&q=80&w=2070') no-repeat center/cover;
-        background-attachment: fixed;
+        background: linear-gradient(rgba(0,0,0,0.45), rgba(0,0,0,0.45)), 
+                    url('assets/bg.jpg') no-repeat center/cover;
     }
 
     /* Biến cái nút upload mặc định thành Card kính mờ */
@@ -149,4 +148,5 @@ if uploaded_file:
             </div>
         </div>
     </div>
+
     """, unsafe_allow_html=True)
