@@ -6,12 +6,12 @@ from io import BytesIO
 import json
 
 # ===============================
-# 1. CẤU HÌNH TRANG
+# 1. CONFIG
 # ===============================
 st.set_page_config(page_title="Food Recognition", layout="wide")
 
 # ===============================
-# 2. LOAD BACKGROUND (BASE64)
+# 2. BACKGROUND BASE64
 # ===============================
 def get_base64_bg(path):
     with open(path, "rb") as f:
@@ -20,17 +20,15 @@ def get_base64_bg(path):
 bg_base64 = get_base64_bg("assets/bg.jpg")
 
 # ===============================
-# 3. CSS – GIỐNG FILE HTML MẪU
+# 3. CSS (KHÔNG ĐỤNG stFileUploader)
 # ===============================
 st.markdown(f"""
 <style>
-/* Reset layout */
 .block-container {{
     padding: 0 !important;
     max-width: 100% !important;
 }}
 
-/* HERO SECTION */
 .hero {{
     height: 70vh;
     display: flex;
@@ -42,7 +40,6 @@ st.markdown(f"""
         url("data:image/jpeg;base64,{bg_base64}")
         no-repeat center / cover;
     color: white;
-    font-family: -apple-system, BlinkMacSystemFont, sans-serif;
 }}
 
 .hero h1 {{
@@ -56,35 +53,35 @@ st.markdown(f"""
     opacity: 0.85;
 }}
 
-/* CONTAINER */
 .container {{
     max-width: 980px;
-    margin: -100px auto 100px;
+    margin: -120px auto 100px;
     padding: 0 20px;
 }}
 
-/* UPLOAD CARD */
 .upload-card {{
     background: rgba(255,255,255,0.75);
     backdrop-filter: blur(20px);
-    border-radius: 20px;
-    padding: 60px;
-    text-align: center;
-    box-shadow: 0 8px 32px rgba(0,0,0,0.15);
+    border-radius: 24px;
+    padding: 50px;
+    box-shadow: 0 30px 80px rgba(0,0,0,0.25);
 }}
 
-/* RESULT BOX */
+.upload-title {{
+    text-align: center;
+    font-size: 20px;
+    margin-bottom: 20px;
+    color: #1d1d1f;
+}}
+
 .result-box {{
     background: white;
     border-radius: 24px;
     padding: 40px;
     margin-top: 80px;
     box-shadow: 0 20px 60px rgba(0,0,0,0.2);
-    font-family: -apple-system, sans-serif;
-    color: #1d1d1f;
 }}
 
-/* NUTRITION PILLS */
 .pill {{
     display: inline-block;
     padding: 10px 20px;
@@ -102,7 +99,7 @@ st.markdown(f"""
 """, unsafe_allow_html=True)
 
 # ===============================
-# 4. HERO SECTION
+# 4. HERO
 # ===============================
 st.markdown("""
 <div class="hero">
@@ -114,34 +111,33 @@ st.markdown("""
 """, unsafe_allow_html=True)
 
 # ===============================
-# 5. LOAD MODEL & DATA (AI – GIỮ NGUYÊN)
+# 5. LOAD MODEL (AI – GIỮ NGUYÊN)
 # ===============================
 @st.cache_resource
 def load_model():
     return YOLO("models/best.pt")
 
-try:
-    model = load_model()
-    with open("data/nutrition.json", "r", encoding="utf-8") as f:
-        nutrition_data = json.load(f)
-except Exception as e:
-    st.error(f"Lỗi tải model hoặc dữ liệu: {e}")
-    st.stop()
+model = load_model()
+
+with open("data/nutrition.json", "r", encoding="utf-8") as f:
+    nutrition_data = json.load(f)
 
 # ===============================
-# 6. UPLOAD CARD
+# 6. UPLOAD CARD (TRIỆT ĐỂ)
 # ===============================
 st.markdown('<div class="container"><div class="upload-card">', unsafe_allow_html=True)
+st.markdown('<div class="upload-title">📷 Drop an image of a dish</div>', unsafe_allow_html=True)
 
 uploaded_file = st.file_uploader(
-    "Drop an image of a dish",
-    type=["jpg", "jpeg", "png"]
+    "",
+    type=["jpg", "jpeg", "png"],
+    label_visibility="collapsed"
 )
 
-st.markdown('</div>', unsafe_allow_html=True)
+st.markdown('</div></div>', unsafe_allow_html=True)
 
 # ===============================
-# 7. AI PREDICTION + RESULT
+# 7. RESULT + YOLO
 # ===============================
 if uploaded_file:
     img = Image.open(uploaded_file)
@@ -169,29 +165,27 @@ if uploaded_file:
             <span class="pill pill-yellow">🧂 Salt: {info.get("salt","N/A")}g</span>
         """
 
-    buffered = BytesIO()
-    img.save(buffered, format="JPEG")
-    img_str = base64.b64encode(buffered.getvalue()).decode()
+    buf = BytesIO()
+    img.save(buf, format="JPEG")
+    img_b64 = base64.b64encode(buf.getvalue()).decode()
 
     st.markdown(f"""
     <div class="container">
         <div class="result-box">
             <div style="display:flex; gap:40px; flex-wrap:wrap;">
                 <div style="flex:1; min-width:300px;">
-                    <img src="data:image/jpeg;base64,{img_str}"
+                    <img src="data:image/jpeg;base64,{img_b64}"
                          style="width:100%; border-radius:20px;">
                 </div>
-                <div style="flex:1; min-width:300px; display:flex; flex-direction:column; justify-content:center;">
-                    <p style="color:#86868b; font-weight:700; font-size:13px; letter-spacing:1px;">
+                <div style="flex:1; min-width:300px;">
+                    <p style="color:#86868b; letter-spacing:1px; font-weight:700;">
                         {confidence}
                     </p>
-                    <h1 style="font-size:48px; margin:5px 0 15px 0;">
-                        {label_display}
-                    </h1>
-                    <p style="font-size:18px; line-height:1.6; color:#424245; margin-bottom:30px;">
+                    <h1 style="font-size:48px;">{label_display}</h1>
+                    <p style="color:#424245; font-size:18px;">
                         {desc}
                     </p>
-                    <div style="height:1px; background:#e5e5e7; margin-bottom:20px;"></div>
+                    <div style="height:1px; background:#e5e5e7; margin:20px 0;"></div>
                     <div>{pills_html}</div>
                 </div>
             </div>
