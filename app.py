@@ -1,47 +1,38 @@
 import streamlit as st
 import base64
 import json
-from pathlib import Path
 from ultralytics import YOLO
 from PIL import Image
-from io import BytesIO
 
 # ===============================
 # PAGE CONFIG
 # ===============================
 st.set_page_config(
     page_title="FoodDetector",
-    page_icon="🍜",
+    page_icon="🕵️",
     layout="wide"
 )
 
 # ===============================
 # UTILS
 # ===============================
-def img_to_base64(img_path):
-    with open(img_path, "rb") as f:
-        return base64.b64encode(f.read()).decode("utf-8")
+def img_to_base64(path):
+    with open(path, "rb") as f:
+        return base64.b64encode(f.read()).decode()
 
 # ===============================
-# LOAD ASSETS
+# ASSETS
 # ===============================
-BG_IMAGE = img_to_base64("assets/bg.jpg")
+HERO_BG = img_to_base64("assets/bg.jpg")
 
 # ===============================
-# GLOBAL CSS
+# GLOBAL CSS (WEBSITE STYLE)
 # ===============================
 st.markdown(f"""
 <style>
 :root {{
-    --primary: #22c55e;
-    --secondary: #f97316;
     --dark: #0f172a;
-    --light: #f8fafc;
-    --glass: rgba(255,255,255,0.75);
-}}
-
-body {{
-    background: var(--light);
+    --glass: rgba(255,255,255,0.78);
 }}
 
 .block-container {{
@@ -49,20 +40,20 @@ body {{
     max-width: 100%;
 }}
 
+body {{
+    background: #f8fafc;
+}}
+
 /* HERO */
 .hero {{
     position: relative;
-    width: 100%;
-    height: 60vh;
-    overflow: hidden;
+    height: 65vh;
 }}
 
 .hero-bg {{
     position: absolute;
     inset: 0;
-    background-image: url("data:image/jpeg;base64,{BG_IMAGE}");
-    background-size: cover;
-    background-position: center;
+    background: url("data:image/jpeg;base64,{HERO_BG}") center/cover no-repeat;
 }}
 
 .hero-overlay {{
@@ -70,23 +61,21 @@ body {{
     inset: 0;
     background: linear-gradient(
         rgba(15,23,42,0.55),
-        rgba(15,23,42,0.65)
+        rgba(15,23,42,0.7)
     );
     display: flex;
-    flex-direction: column;
-    justify-content: center;
     align-items: center;
+    justify-content: center;
     text-align: center;
     color: white;
 }}
 
-.hero-title {{
+.hero h1 {{
     font-size: 64px;
     font-weight: 900;
-    letter-spacing: 1px;
 }}
 
-.hero-sub {{
+.hero p {{
     font-size: 22px;
     opacity: 0.9;
 }}
@@ -94,20 +83,20 @@ body {{
 /* SECTIONS */
 .section {{
     max-width: 1100px;
-    margin: -120px auto 80px auto;
+    margin: -120px auto 80px;
     padding: 0 24px;
 }}
 
 .card {{
     background: var(--glass);
-    backdrop-filter: blur(18px);
+    backdrop-filter: blur(20px);
     border-radius: 28px;
     padding: 48px;
-    box-shadow: 0 30px 80px rgba(0,0,0,0.25);
+    box-shadow: 0 40px 100px rgba(0,0,0,0.25);
 }}
 
 /* UPLOAD */
-.upload-card {{
+.upload {{
     text-align: center;
 }}
 
@@ -123,7 +112,6 @@ body {{
 
 .result h2 {{
     font-size: 48px;
-    margin-bottom: 8px;
 }}
 
 .conf {{
@@ -144,8 +132,8 @@ body {{
 
 .blue {{ background: #e0f2fe; color: #0369a1; }}
 .green {{ background: #dcfce7; color: #166534; }}
-.yellow {{ background: #fef9c3; color: #854d0e; }}
 .pink {{ background: #fce7f3; color: #9d174d; }}
+.yellow {{ background: #fef9c3; color: #854d0e; }}
 
 /* FOOTER */
 .footer {{
@@ -163,8 +151,10 @@ st.markdown("""
 <div class="hero">
     <div class="hero-bg"></div>
     <div class="hero-overlay">
-        <div class="hero-title">FoodDetector 🕵️</div>
-        <div class="hero-sub">Detect Vietnamese dishes from an image</div>
+        <div>
+            <h1>FoodDetector 🕵️</h1>
+            <p>Detect Vietnamese dishes from a single image</p>
+        </div>
     </div>
 </div>
 """, unsafe_allow_html=True)
@@ -186,12 +176,12 @@ with open("data/nutrition.json", "r", encoding="utf-8") as f:
 # ===============================
 st.markdown('<div class="section">', unsafe_allow_html=True)
 
-# UPLOAD
-st.markdown('<div class="card upload-card">', unsafe_allow_html=True)
+# UPLOAD CARD
+st.markdown('<div class="card upload">', unsafe_allow_html=True)
 st.markdown('<div class="upload-icon">📸</div>', unsafe_allow_html=True)
 
 uploaded_file = st.file_uploader(
-    "Upload an image of food",
+    "Upload a food image",
     type=["jpg", "jpeg", "png"]
 )
 
@@ -207,7 +197,7 @@ if uploaded_file:
     label_display = "Unknown Dish"
     confidence = "—"
     desc = "No description available."
-    pills_html = ""
+    pills = ""
 
     if len(results[0].boxes) > 0:
         box = results[0].boxes[0]
@@ -219,11 +209,11 @@ if uploaded_file:
         confidence = f"{prob:.1%}"
         desc = info.get("description", desc)
 
-        pills_html = f"""
-            <span class="pill blue">🔥 {info.get("calories","N/A")} kcal</span>
-            <span class="pill green">🥩 Fat {info.get("fat","N/A")}g</span>
-            <span class="pill pink">🍭 Sugar {info.get("sugar","N/A")}g</span>
-            <span class="pill yellow">🧂 Salt {info.get("salt","N/A")}g</span>
+        pills = f"""
+        <span class="pill blue">🔥 {info.get("calories","N/A")} kcal</span>
+        <span class="pill green">🥩 Fat {info.get("fat","N/A")}g</span>
+        <span class="pill pink">🍭 Sugar {info.get("sugar","N/A")}g</span>
+        <span class="pill yellow">🧂 Salt {info.get("salt","N/A")}g</span>
         """
 
     col1, col2 = st.columns([1, 1], gap="large")
@@ -237,7 +227,7 @@ if uploaded_file:
             <div class="conf">CONFIDENCE {confidence}</div>
             <h2>{label_display}</h2>
             <p>{desc}</p>
-            <div>{pills_html}</div>
+            <div>{pills}</div>
         </div>
         """, unsafe_allow_html=True)
 
@@ -248,6 +238,6 @@ st.markdown('</div>', unsafe_allow_html=True)
 # ===============================
 st.markdown("""
 <div class="footer">
-    Built with YOLO & Streamlit · FoodDetector Demo
+    FoodDetector · YOLO · Streamlit
 </div>
 """, unsafe_allow_html=True)
