@@ -6,72 +6,90 @@ import json
 import base64
 
 # ===============================
-# 1. CẤU HÌNH TRANG
+# PAGE CONFIG
 # ===============================
 st.set_page_config(
-    page_title="Food AI Playground",
-    layout="wide"
+    page_title="Food AI",
+    layout="wide",
+    page_icon="🍔"
 )
 
 # ===============================
-# 2. CSS – GIAO DIỆN VUI NHỘN, CÂN XỨNG
+# GLOBAL STYLE (CLEAN + PLAYFUL)
 # ===============================
 st.markdown("""
 <style>
 body {
-    background: #f6f7fb;
+    background: linear-gradient(180deg, #f8fafc, #eef2ff);
 }
 
 .block-container {
-    padding-top: 2rem;
+    padding-top: 2.5rem;
+    padding-bottom: 4rem;
 }
 
 /* HEADER */
 .header {
     text-align: center;
-    margin-bottom: 40px;
+    margin-bottom: 3rem;
 }
 
 .header h1 {
-    font-size: 52px;
-    font-weight: 700;
+    font-size: 56px;
+    font-weight: 800;
+    background: linear-gradient(90deg, #6366f1, #ec4899);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
 }
 
 .header p {
     font-size: 20px;
-    color: #6b7280;
+    color: #475569;
 }
 
 /* CARD */
 .card {
     background: white;
-    border-radius: 24px;
-    padding: 40px;
-    box-shadow: 0 10px 30px rgba(0,0,0,0.08);
+    border-radius: 28px;
+    padding: 42px;
+    box-shadow: 0 20px 60px rgba(0,0,0,0.08);
 }
 
 /* UPLOAD */
-.upload-card {
-    max-width: 500px;
-    margin: 0 auto 50px auto;
+.upload {
+    max-width: 520px;
+    margin: 0 auto 60px auto;
     text-align: center;
 }
 
 .upload-icon {
-    font-size: 48px;
-    margin-bottom: 10px;
+    font-size: 56px;
+    margin-bottom: 12px;
 }
 
 /* RESULT */
-.result-card {
+.result-card h2 {
+    font-size: 42px;
+    margin-bottom: 6px;
+}
+
+.confidence {
+    font-size: 14px;
+    letter-spacing: 0.15em;
+    font-weight: 700;
+    color: #64748b;
+}
+
+.pills {
     margin-top: 20px;
 }
 
 .pill {
     display: inline-block;
     padding: 10px 18px;
-    border-radius: 20px;
+    border-radius: 999px;
     font-size: 14px;
+    font-weight: 600;
     margin: 6px 6px 0 0;
 }
 
@@ -79,23 +97,31 @@ body {
 .green { background: #dcfce7; color: #166534; }
 .pink { background: #fce7f3; color: #9d174d; }
 .yellow { background: #fef9c3; color: #854d0e; }
+
+/* FOOTER NOTE */
+.note {
+    text-align: center;
+    margin-top: 60px;
+    color: #94a3b8;
+    font-size: 14px;
+}
 </style>
 """, unsafe_allow_html=True)
 
 # ===============================
-# 3. HEADER
+# HEADER
 # ===============================
 st.markdown("""
 <div class="header">
-    <h1>🍜 Food AI Playground</h1>
-    <p>Upload a food photo and let AI guess your dish ✨</p>
+    <h1>🍜 Food AI</h1>
+    <p>Upload a food photo. Let AI recognize your dish ✨</p>
 </div>
 """, unsafe_allow_html=True)
 
 # ===============================
-# 4. UPLOAD CARD (KHÔNG LỖI)
+# UPLOAD CARD
 # ===============================
-st.markdown('<div class="card upload-card">', unsafe_allow_html=True)
+st.markdown('<div class="card upload">', unsafe_allow_html=True)
 st.markdown('<div class="upload-icon">📸</div>', unsafe_allow_html=True)
 
 uploaded_file = st.file_uploader(
@@ -106,7 +132,7 @@ uploaded_file = st.file_uploader(
 st.markdown('</div>', unsafe_allow_html=True)
 
 # ===============================
-# 5. LOAD MODEL YOLO (PHẦN AI)
+# LOAD AI MODEL
 # ===============================
 @st.cache_resource
 def load_model():
@@ -117,17 +143,17 @@ try:
     with open("data/nutrition.json", "r", encoding="utf-8") as f:
         nutrition_data = json.load(f)
 except Exception as e:
-    st.error(f"Lỗi tải model hoặc dữ liệu: {e}")
+    st.error(f"Failed to load model or data: {e}")
     st.stop()
 
 # ===============================
-# 6. XỬ LÝ + HIỂN THỊ KẾT QUẢ
+# RESULT
 # ===============================
 if uploaded_file:
     img = Image.open(uploaded_file)
     results = model.predict(img, conf=0.25)
 
-    col1, col2 = st.columns([1, 1])
+    col1, col2 = st.columns([1, 1], gap="large")
 
     with col1:
         st.image(img, use_container_width=True)
@@ -136,8 +162,8 @@ if uploaded_file:
         st.markdown('<div class="card result-card">', unsafe_allow_html=True)
 
         label_display = "Unknown Dish"
-        confidence = "0%"
-        desc = "AI could not identify this dish."
+        confidence = "—"
+        desc = "AI could not confidently identify this dish."
         pills_html = ""
 
         if len(results[0].boxes) > 0:
@@ -147,8 +173,8 @@ if uploaded_file:
 
             info = nutrition_data.get(label, {})
             label_display = info.get("display_name", label).replace("_", " ").title()
-            confidence = f"{prob:.1%} confidence"
-            desc = info.get("description", "No description available.")
+            confidence = f"{prob:.1%}"
+            desc = info.get("description", desc)
 
             pills_html = f"""
                 <span class="pill blue">🔥 {info.get("calories","N/A")} kcal</span>
@@ -158,10 +184,19 @@ if uploaded_file:
             """
 
         st.markdown(f"""
+        <div class="confidence">CONFIDENCE {confidence}</div>
         <h2>{label_display}</h2>
-        <p style="color:#6b7280">{confidence}</p>
-        <p>{desc}</p>
-        <div>{pills_html}</div>
+        <p style="color:#475569; font-size:17px;">{desc}</p>
+        <div class="pills">{pills_html}</div>
         """, unsafe_allow_html=True)
 
         st.markdown('</div>', unsafe_allow_html=True)
+
+# ===============================
+# FOOTER
+# ===============================
+st.markdown("""
+<div class="note">
+    Powered by YOLO · Built with Streamlit
+</div>
+""", unsafe_allow_html=True)
