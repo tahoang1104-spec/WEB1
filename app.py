@@ -4,164 +4,141 @@ import json
 from ultralytics import YOLO
 from PIL import Image
 
-# ===============================
-# PAGE CONFIG
-# ===============================
+# ================= PAGE CONFIG =================
 st.set_page_config(
     page_title="FoodDetector",
     page_icon="🕵️",
     layout="wide"
 )
 
-# ===============================
-# UTILS
-# ===============================
-def img_to_base64(path):
-    with open(path, "rb") as f:
+# ================= UTILS =================
+def img_to_base64(img_path):
+    with open(img_path, "rb") as f:
         return base64.b64encode(f.read()).decode()
 
-# ===============================
-# ASSETS
-# ===============================
-HERO_BG = img_to_base64("assets/bg.jpg")
+# ================= LOAD ASSETS =================
+bg_base64 = img_to_base64("assets/bg.jpg")
 
-# ===============================
-# GLOBAL CSS (WEBSITE STYLE)
-# ===============================
-st.markdown(f"""
+# ================= GLOBAL STYLE =================
+st.markdown("""
 <style>
-:root {{
-    --dark: #0f172a;
-    --glass: rgba(255,255,255,0.78);
-}}
-
-.block-container {{
+.block-container {
     padding: 0;
     max-width: 100%;
-}}
+}
 
-body {{
-    background: #f8fafc;
-}}
+body {
+    background-color: #f5f5f5;
+}
 
-/* HERO */
-.hero {{
+/* HEADER */
+.header-container {
     position: relative;
-    height: 65vh;
-}}
+    width: 100%;
+    height: calc(160px + 15vw);
+    overflow: hidden;
+}
 
-.hero-bg {{
+.header-image {
     position: absolute;
     inset: 0;
-    background: url("data:image/jpeg;base64,{HERO_BG}") center/cover no-repeat;
-}}
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+}
 
-.hero-overlay {{
+.header-overlay {
     position: absolute;
     inset: 0;
     background: linear-gradient(
-        rgba(15,23,42,0.55),
-        rgba(15,23,42,0.7)
+        rgba(0,0,0,0.55),
+        rgba(0,0,0,0.75)
     );
     display: flex;
+    said: center;
     align-items: center;
     justify-content: center;
     text-align: center;
     color: white;
-}}
+}
 
-.hero h1 {{
-    font-size: 64px;
-    font-weight: 900;
-}}
+.header-title {
+    font-size: calc(32px + 2vw);
+    font-weight: 800;
+}
 
-.hero p {{
-    font-size: 22px;
-    opacity: 0.9;
-}}
+.header-subtitle {
+    font-size: calc(14px + 0.6vw);
+    margin-top: 8px;
+}
 
-/* SECTIONS */
-.section {{
+/* CONTENT */
+.main-container {
     max-width: 1100px;
-    margin: -120px auto 80px;
+    margin: -80px auto 80px;
     padding: 0 24px;
-}}
+}
 
-.card {{
-    background: var(--glass);
-    backdrop-filter: blur(20px);
-    border-radius: 28px;
-    padding: 48px;
-    box-shadow: 0 40px 100px rgba(0,0,0,0.25);
-}}
+.card {
+    background: white;
+    border-radius: 18px;
+    padding: 36px;
+    box-shadow: 0 25px 60px rgba(0,0,0,0.15);
+    margin-bottom: 40px;
+}
 
-/* UPLOAD */
-.upload {{
-    text-align: center;
-}}
-
-.upload-icon {{
-    font-size: 64px;
-    margin-bottom: 16px;
-}}
+/* UPLOADER */
+[data-testid="stFileUploader"] {
+    border-radius: 16px;
+    padding: 24px;
+    background: #f9fafb;
+}
 
 /* RESULT */
-.result {{
-    margin-top: 80px;
-}}
-
-.result h2 {{
-    font-size: 48px;
-}}
-
-.conf {{
-    font-size: 14px;
-    letter-spacing: 0.15em;
+.result-title {
+    font-size: 40px;
     font-weight: 700;
-    color: #475569;
-}}
+}
 
-.pill {{
+.confidence {
+    letter-spacing: 0.15em;
+    font-size: 13px;
+    font-weight: 700;
+    color: #6b7280;
+}
+
+.pill {
     display: inline-block;
-    padding: 10px 20px;
+    padding: 8px 16px;
     border-radius: 999px;
-    font-size: 14px;
+    font-size: 13px;
     font-weight: 600;
     margin: 6px 6px 0 0;
-}}
+}
 
-.blue {{ background: #e0f2fe; color: #0369a1; }}
-.green {{ background: #dcfce7; color: #166534; }}
-.pink {{ background: #fce7f3; color: #9d174d; }}
-.yellow {{ background: #fef9c3; color: #854d0e; }}
-
-/* FOOTER */
-.footer {{
-    text-align: center;
-    padding: 40px;
-    color: #64748b;
-}}
+.blue { background:#e0f2fe; color:#0369a1; }
+.green { background:#dcfce7; color:#166534; }
+.pink { background:#fce7f3; color:#9d174d; }
+.yellow { background:#fef9c3; color:#854d0e; }
 </style>
 """, unsafe_allow_html=True)
 
-# ===============================
-# HERO
-# ===============================
-st.markdown("""
-<div class="hero">
-    <div class="hero-bg"></div>
-    <div class="hero-overlay">
+# ================= HEADER =================
+st.markdown(f"""
+<div class="header-container">
+    <img src="data:image/jpeg;base64,{bg_base64}" class="header-image">
+    <div class="header-overlay">
         <div>
-            <h1>FoodDetector 🕵️</h1>
-            <p>Detect Vietnamese dishes from a single image</p>
+            <div class="header-title">FoodDetector 🕵️</div>
+            <div class="header-subtitle">
+                Detect Vietnamese dishes from a single image
+            </div>
         </div>
     </div>
 </div>
 """, unsafe_allow_html=True)
 
-# ===============================
-# LOAD MODEL + DATA
-# ===============================
+# ================= LOAD MODEL =================
 @st.cache_resource
 def load_model():
     return YOLO("models/best.pt")
@@ -169,44 +146,52 @@ def load_model():
 model = load_model()
 
 with open("data/nutrition.json", "r", encoding="utf-8") as f:
-    nutrition_data = json.load(f)
+    nutrition = json.load(f)
 
-# ===============================
-# MAIN SECTION
-# ===============================
-st.markdown('<div class="section">', unsafe_allow_html=True)
+# ================= MAIN =================
+st.markdown('<div class="main-container">', unsafe_allow_html=True)
 
-# UPLOAD CARD
-st.markdown('<div class="card upload">', unsafe_allow_html=True)
-st.markdown('<div class="upload-icon">📸</div>', unsafe_allow_html=True)
+# INTRO
+st.markdown("""
+<div class="card">
+FoodDetector uses a fine-tuned <b>YOLO</b> model to detect Vietnamese dishes from an image
+and estimate basic nutrition information.
+</div>
+""", unsafe_allow_html=True)
 
-uploaded_file = st.file_uploader(
+# CONFIDENCE
+confidence = st.slider(
+    "Adjust confidence threshold",
+    min_value=10,
+    max_value=90,
+    value=50
+) / 100
+
+# UPLOAD
+st.markdown('<div class="card">', unsafe_allow_html=True)
+uploaded = st.file_uploader(
     "Upload a food image",
-    type=["jpg", "jpeg", "png"]
+    type=["jpg","jpeg","png"]
 )
-
 st.markdown('</div>', unsafe_allow_html=True)
 
-# ===============================
 # RESULT
-# ===============================
-if uploaded_file:
-    img = Image.open(uploaded_file)
-    results = model.predict(img, conf=0.25)
+if uploaded:
+    img = Image.open(uploaded)
+    results = model.predict(img, conf=confidence)
 
-    label_display = "Unknown Dish"
-    confidence = "—"
+    label = "Unknown dish"
+    conf = "—"
     desc = "No description available."
     pills = ""
 
     if len(results[0].boxes) > 0:
         box = results[0].boxes[0]
-        label = model.names[int(box.cls)]
+        cls = model.names[int(box.cls)]
         prob = float(box.conf)
-
-        info = nutrition_data.get(label, {})
-        label_display = info.get("display_name", label).replace("_", " ").title()
-        confidence = f"{prob:.1%}"
+        info = nutrition.get(cls, {})
+        label = info.get("display_name", cls).replace("_"," ").title()
+        conf = f"{prob:.1%}"
         desc = info.get("description", desc)
 
         pills = f"""
@@ -216,28 +201,19 @@ if uploaded_file:
         <span class="pill yellow">🧂 Salt {info.get("salt","N/A")}g</span>
         """
 
-    col1, col2 = st.columns([1, 1], gap="large")
+    col1, col2 = st.columns([1,1], gap="large")
 
     with col1:
         st.image(img, use_container_width=True)
 
     with col2:
         st.markdown(f"""
-        <div class="card result">
-            <div class="conf">CONFIDENCE {confidence}</div>
-            <h2>{label_display}</h2>
+        <div class="card">
+            <div class="confidence">CONFIDENCE {conf}</div>
+            <div class="result-title">{label}</div>
             <p>{desc}</p>
             <div>{pills}</div>
         </div>
         """, unsafe_allow_html=True)
 
 st.markdown('</div>', unsafe_allow_html=True)
-
-# ===============================
-# FOOTER
-# ===============================
-st.markdown("""
-<div class="footer">
-    FoodDetector · YOLO · Streamlit
-</div>
-""", unsafe_allow_html=True)
