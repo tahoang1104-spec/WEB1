@@ -5,6 +5,13 @@ import base64
 from io import BytesIO
 import json
 import os
+import base64
+
+def get_base64_bg(path):
+    with open(path, "rb") as f:
+        return base64.b64encode(f.read()).decode()
+
+bg_base64 = get_base64_bg("assets/bg.jpg")
 
 # 1. CẤU HÌNH TRANG
 st.set_page_config(page_title="Food Recognition", layout="wide")
@@ -19,10 +26,17 @@ st.markdown("""
     .block-container {padding: 0rem !important; max-width: 100% !important;}
     
     /* Ảnh nền Hero (Full màn hình) */
-    .stApp {
-        background: linear-gradient(rgba(0,0,0,0.45), rgba(0,0,0,0.45)), 
-                    url('assets/bg.jpg') no-repeat center/cover;
-    }
+    st.markdown(f"""
+    <style>
+    .stApp {{
+        background:
+            linear-gradient(rgba(0,0,0,0.4), rgba(0,0,0,0.4)),
+            url("data:image/jpeg;base64,{bg_base64}") no-repeat center/cover;
+        background-attachment: fixed;
+    }}
+    </style>
+    """, unsafe_allow_html=True)
+
 
     /* Biến cái nút upload mặc định thành Card kính mờ */
     [data-testid="stFileUploader"] {
@@ -150,3 +164,4 @@ if uploaded_file:
     </div>
 
     """, unsafe_allow_html=True)
+
