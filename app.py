@@ -13,6 +13,19 @@ def get_base64_bg(path):
 
 bg_base64 = get_base64_bg("assets/bg.jpg")
 
+st.markdown(f"""
+<style>
+.stApp {{
+    background:
+        linear-gradient(rgba(0,0,0,0.4), rgba(0,0,0,0.4)),
+        url("data:image/jpeg;base64,{bg_base64}")
+        no-repeat center / cover;
+    background-attachment: fixed;
+}}
+</style>
+""", unsafe_allow_html=True)
+
+
 # 1. CẤU HÌNH TRANG
 st.set_page_config(page_title="Food Recognition", layout="wide")
 
@@ -25,18 +38,6 @@ st.markdown("""
     footer {display: none;}
     .block-container {padding: 0rem !important; max-width: 100% !important;}
     
-    /* Ảnh nền Hero (Full màn hình) */
-    st.markdown(f"""
-    <style>
-    .stApp {{
-        background:
-            linear-gradient(rgba(0,0,0,0.4), rgba(0,0,0,0.4)),
-            url("data:image/jpeg;base64,{bg_base64}")
-            no-repeat center / cover;
-        background-attachment: fixed;
-    }}
-    </style>
-    """, unsafe_allow_html=True)
 
 
     /* Biến cái nút upload mặc định thành Card kính mờ */
@@ -165,5 +166,6 @@ if uploaded_file:
     </div>
 
     """, unsafe_allow_html=True)
+
 
 
